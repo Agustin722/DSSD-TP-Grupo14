@@ -12,9 +12,8 @@ def authenticate_bonita():
         "password": password,
         "redirect": "false"
     }
-    
     response = requests.post(login_url, data=payload)
-    if response.status_code == 200:
+    if response.status_code == 204:
         return response.cookies
     else:
         raise Exception("Error de autenticación con Bonita")
