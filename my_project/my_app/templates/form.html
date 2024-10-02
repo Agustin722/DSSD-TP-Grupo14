@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}Formulario de Materiales{% endblock %}
+
+{% block content %}
+<h2 class="my-4">Formulario de Materiales</h2>
+
+{% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="POST" action="{% url 'submit-materials' %}">
+    {% csrf_token %}
+    <div id="material-container">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-4">
+                <label for="tipo_material" class="form-label">Tipo de Material:</label>
+                <select name="tipo_material" class="form-select" required>
+                    <option value="plastico">Plástico</option>
+                    <option value="papel">Papel</option>
+                    <option value="vidrio">Vidrio</option>
+                    <option value="metal">Metal</option>
+                    <option value="organico">Orgánico</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="cantidad" class="form-label">Cantidad:</label>
+                <input type="number" name="cantidad" class="form-control" min="1" required>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <button type="button" class="btn btn-secondary" onclick="addMaterialRow()">Agregar otro material</button>
+    </div>
+    <div class="mt-3">
+        <input type="submit" class="btn btn-primary" value="Enviar">
+    </div>
+</form>
+
+<script>
+    // Función para agregar una nueva fila de materiales
+    function addMaterialRow() {
+        const container = document.getElementById("material-container");
+        const newRow = document.createElement("div");
+        newRow.classList.add("row", "g-3", "align-items-center");
+        newRow.innerHTML = `
+            <div class="col-md-4">
+                <label for="tipo_material" class="form-label">Tipo de Material:</label>
+                <select name="tipo_material" class="form-select" required>
+                    <option value="plastico">Plástico</option>
+                    <option value="papel">Papel</option>
+                    <option value="vidrio">Vidrio</option>
+                    <option value="metal">Metal</option>
+                    <option value="organico">Orgánico</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="cantidad" class="form-label">Cantidad:</label>
+                <input type="number" name="cantidad" class="form-control" min="1" required>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="btn btn-danger" onclick="removeMaterialRow(this)">Eliminar</button>
+            </div>
+        `;
+        container.appendChild(newRow);
+    }
+
+    // Función para eliminar una fila de materiales
+    function removeMaterialRow(button) {
+        const row = button.closest('.row');
+        row.remove();
+    }
+</script>
+{% endblock %}
