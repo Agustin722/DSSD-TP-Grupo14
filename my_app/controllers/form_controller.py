@@ -48,6 +48,23 @@ def submit_materials(request):
         except Exception as e:
             messages.error(request, f"Error al iniciar el proceso en Bonita: {str(e)}")
         
-        return redirect('submit-materials')
+        return redirect('pago-pendiente')
     
     return render(request, 'form.html')
+
+def pago_pendiente(request):
+    if request.method == 'GET':
+        # Verificar si el pago ha sido recibido
+        pago_recibido = False
+        try:
+            # Aquí debes agregar la lógica para verificar si el pago ha sido recibido
+            # Por ejemplo, podrías consultar una base de datos o hacer una llamada a una API
+            pago_recibido = True
+            monto_pago = 100  # Monto del pago (solo un ejemplo)
+        except Exception as e:
+            messages.error(request, f"Error al verificar el pago: {str(e)}")
+        
+        if pago_recibido:
+            return render(request, 'pago_recibido.html', {'monto_pago': monto_pago})
+        else:
+            return render(request, 'pago_pendiente.html')

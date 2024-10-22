@@ -88,6 +88,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Backends de autenticación
+AUTHENTICATION_BACKENDS = [
+    'my_app.helpers.login_backend.DniAuthBackend',  # Nuestro backend personalizado
+    'django.contrib.auth.backends.ModelBackend',  # Autenticación estándar
+]
+
 # Internacionalización y archivos estáticos
 LANGUAGE_CODE = 'es-es'
 TIME_ZONE = 'America/Argentina/Buenos_Aires'

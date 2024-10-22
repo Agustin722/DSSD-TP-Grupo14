@@ -21,3 +21,18 @@ class Material(models.Model):
 
     def __str__(self):
         return f"{self.tipo_material} - {self.cantidad}"
+    
+    def clean(self):
+        if self.cantidad <= 0:
+            raise ValueError("La cantidad debe ser mayor que cero")
+
+    def save(self, *args, **kwargs):
+        """
+        Realiza una limpieza previa de los datos y luego delega en el save de la clase padre
+        para que realice la operacion de guardado en la base de datos.
+
+        El save de la clase padre es el que se encarga de realmente persistir en la
+        base de datos los cambios realizados en el objeto.
+        """
+        self.clean()
+        super().save(*args, **kwargs)
