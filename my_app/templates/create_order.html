@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>Crear orden</h1>
+  <form action="{% url 'create_order' %}" method="post">
+    {% csrf_token %}
+    <label>Material:</label>
+    <select name="material">
+      {% for code, name in material_choices %}
+        <option value="{{ code }}">{{ name }}</option>
+      {% endfor %}
+    </select>
+    <label>Cantidad:</label>
+    <input type="number" name="quantity" min="1">
+    <button type="submit">Crear</button>
+  </form>
+{% endblock %}

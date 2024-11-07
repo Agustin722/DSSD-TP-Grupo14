@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% block content %}
+  <h1>Iniciar Sesión</h1>
+  <form action="{% url 'login_api' %}" method="post">
+    {% csrf_token %}
+    <label>Nombre de usuario:</label>
+    <input type="text" name="username" required>
+    <label>Contraseña:</label>
+    <input type="password" name="password" required>
+    <button type="submit">Iniciar Sesión</button>
+    {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% endif %}
+  </form>
+{% endblock %}
