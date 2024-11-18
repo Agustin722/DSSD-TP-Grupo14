@@ -31,10 +31,19 @@ def start_bonita_process(process_definition_id, variables):
         raise Exception(f"Error al iniciar el proceso en Bonita: {response.text}")
 
 def format_variables(input_variables):
-    formatted_variables = []
+    # Inicializar listas para agrupar valores
+    tipo_material_list = []
+    cantidad_list = []
     
+    # Agrupar valores en listas
     for item in input_variables:
-        for key, value in item.items():
-            formatted_variables.append({"name": key, "value": value})
+        tipo_material_list.append(item['tipo_material'])
+        cantidad_list.append(item['cantidad'])
+    
+    # Formatear variables como espera Bonita
+    formatted_variables = [
+        {"name": "tipo_material", "value": tipo_material_list},
+        {"name": "cantidad", "value": cantidad_list}
+    ]
     
     return formatted_variables
