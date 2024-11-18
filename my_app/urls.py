@@ -4,7 +4,7 @@ from .controllers.login_controller import login_view
 from . import views
 
 urlpatterns = [
-    path('', login_view, name='login'),
+    path('', views.login_api, name='login_api'),
     path('ingresar-materiales/', submit_materials, name='submit-materials'),
     path('pago-pendiente/', pago_pendiente, name='pago-pendiente'),
     path('create_order/', views.create_order, name='create_order'),

@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <h1>Crear orden</h1>
+  <h1>Depósitos Crear orden</h1>
   <form action="{% url 'create_order' %}" method="post">
     {% csrf_token %}
     <label>Material:</label>

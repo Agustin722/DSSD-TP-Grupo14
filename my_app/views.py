@@ -22,7 +22,7 @@ def create_order(request):
         # Enviar solicitud a la API externa con el token en el encabezado
         headers = {'Authorization': f'Bearer {token}'}
         response = requests.post(
-            "https://dssd-api-grupo14.onrender.com/api/create-order/",
+            "https://dssd-api-grupo14-e0s1.onrender.com/api/create-order/",
             json={'material_name': material, 'quantity': quantity},
             headers=headers
         )
@@ -50,7 +50,7 @@ def reserve_order(request, order_id):
 
         headers = {'Authorization': f'Bearer {token}'}
         response = requests.post(
-            f'https://dssd-api-grupo14.onrender.com/api/orders/reserve/{order_id}/',
+            f'https://dssd-api-grupo14-e0s1.onrender.com/api/orders/reserve/{order_id}/',
             headers=headers
         )
 
@@ -75,7 +75,7 @@ def deliver_order(request, order_id):
 
         headers = {'Authorization': f'Bearer {token}'}
         response = requests.post(
-            f'https://dssd-api-grupo14.onrender.com/api/deliver-order/{order_id}/',
+            f'https://dssd-api-grupo14-e0s1.onrender.com/api/deliver-order/{order_id}/',
             headers=headers
         )
 
@@ -97,13 +97,13 @@ def register_user(request):
 
         # Enviar solicitud a la API externa
         response = requests.post(
-            'https://dssd-api-grupo14.onrender.com/register/',
+            'https://dssd-api-grupo14-e0s1.onrender.com/register/',
             json={'username': username, 'email': email, 'password': password}
         )
 
         if response.status_code == 201:
             messages.success(request, 'Usuario registrado con éxito.')
-            return redirect('login')  # Redirige a la página de login o donde desees
+            return redirect('login_api')  # Redirige a la página de login o donde desees
         else:
             messages.error(request, 'Error al registrar el usuario.')
             return redirect('register_user')
@@ -118,7 +118,7 @@ def login_api(request):
         password = request.POST.get('password')
 
         # Define la URL de inicio de sesión de la API
-        api_login_url = f"https://dssd-api-grupo14.onrender.com/api/token/"  # Reemplaza con la URL de tu API
+        api_login_url = f"https://dssd-api-grupo14-e0s1.onrender.com/api/token/"  # Reemplaza con la URL de tu API
 
         # Enviar una solicitud de autenticación a la API para obtener el token JWT
         response = requests.post(api_login_url, data={'username': username, 'password': password})
@@ -156,7 +156,7 @@ def order_list(request):
         return redirect('login_api')
     
     # Define la URL de la API y el encabezado de autorización
-    api_url = "https://dssd-api-grupo14.onrender.com/api/orders/"
+    api_url = "https://dssd-api-grupo14-e0s1.onrender.com/api/orders/"
     headers = {'Authorization': f'Bearer {token}'}
     
     # Realiza la solicitud GET a la API para obtener la lista de órdenes
@@ -183,7 +183,7 @@ def material_list(request):
         return redirect('login_api')
 
     # Define la URL de la API y el encabezado de autorización
-    api_url = "https://dssd-api-grupo14.onrender.com/api/materials/"
+    api_url = "https://dssd-api-grupo14-e0s1.onrender.com/api/materials/"
     headers = {'Authorization': f'Bearer {token}'}
 
     # Realiza la solicitud GET a la API para obtener la lista de materiales

@@ -100,4 +100,8 @@ TIME_ZONE = 'America/Argentina/Buenos_Aires'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-STATIC_URL = '/static/'
+STATIC_URL = 'my_app/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "my_app/static",  # Si usas una carpeta global en el proyecto
+]
