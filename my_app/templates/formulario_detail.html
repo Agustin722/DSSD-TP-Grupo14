@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Detalles del Formulario</h1>
+    <p><strong>ID:</strong> {{ object.id }}</p>
+    <p><strong>Fecha:</strong> {{ object.fecha }}</p>
+    
+    <h2>Materiales</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tipo de Material</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for material in object.materiales.all %}
+            <tr>
+                <td>{{ material.get_tipo_material_display }}</td>
+                <td>{{ material.cantidad }}</td>
+                <td>
+                    <a href="{% url 'material_update' material.id %}" class="btn btn-primary btn-sm">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'formulario_list' %}" class="btn btn-secondary">Volver a la Lista</a>
+</div>
+{% endblock %}

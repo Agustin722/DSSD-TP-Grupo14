@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Estadísticas de Materiales</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tipo de Material</th>
+                <th>Cantidad Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for material in materiales_estadisticas %}
+            <tr>
+                <td>{{ material.tipo_material|capfirst }}</td>
+                <td>{{ material.total_cantidad }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'formulario_list' %}" class="btn btn-secondary">Volver a la Lista de Formularios</a>
+</div>
+{% endblock %}

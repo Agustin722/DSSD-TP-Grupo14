@@ -198,3 +198,54 @@ def material_list(request):
 
     # Renderiza el template con la lista de materiales
     return render(request, 'material_list.html', {'object_list': materials})
+
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, UpdateView
+from django.urls import reverse_lazy
+from django.http import Http404
+from my_app.models.material import Formulario, Material
+
+class FormularioListView(ListView):
+    model = Formulario
+    template_name = 'formulario_list.html'
+    context_object_name = 'formularios'
+
+    def get_queryset(self):
+        return Formulario.objects.all()
+
+class MaterialUpdateView(UpdateView):
+    model = Material
+    fields = ['tipo_material', 'cantidad']
+    template_name = 'material_update.html'
+    context_object_name = 'material'
+
+    def get_success_url(self):
+        # Redirigir al detalle del formulario después de la actualización
+        return reverse_lazy('formulario_detail', kwargs={'pk': self.object.formulario.id})
+
+    def form_invalid(self, form):
+        # Aquí puedes manejar si los datos del formulario no son válidos
+        # por ejemplo, mostrar un mensaje de error
+        return self.render_to_response({'form': form, 'material': self.object})
+
+from django.views.generic.detail import DetailView
+
+class FormularioDetailView(DetailView):
+    model = Formulario
+    template_name = "formulario_detail.html"
+
+from django.db.models import Sum
+from django.shortcuts import render
+
+def estadisticas_materiales(request):
+    # Obtener los datos agregados
+    materiales_estadisticas = (
+        Material.objects.values('tipo_material')
+        .annotate(total_cantidad=Sum('cantidad'))
+        .order_by('-total_cantidad')  # Ordenar de mayor a menor
+    )
+
+    context = {
+        'materiales_estadisticas': materiales_estadisticas
+    }
+    return render(request, 'estadisticas_materiales.html', context)

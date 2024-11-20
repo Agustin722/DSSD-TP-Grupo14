@@ -14,4 +14,10 @@ urlpatterns = [
     path('login-api/', views.login_api, name='login_api'),
     path('order_list/', views.order_list, name='order_list'),
     path('material_list/', views.material_list, name='material_list'),
+    path('formularios/', views.FormularioListView.as_view(), name='formulario_list'),
+    path('material/<int:pk>/editar/', views.MaterialUpdateView.as_view(), name='material_update'),
+    path('formulario/<int:pk>/', views.FormularioDetailView.as_view(), name='formulario_detail'),
+    path('estadisticas/', views.estadisticas_materiales, name='estadisticas_materiales'),
+
+
 ]
